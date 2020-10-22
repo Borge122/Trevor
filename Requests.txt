@@ -2,3 +2,10 @@
 2020:Oct:10/22/20-22:59:59 -:- ['turn the light off', 'turn the lights off', 'lights off', 'turn lights off']
 2020:Oct:10/22/20-23:00:02 -:- ['hey trevor', 'hay trevor', 'hey trefor', 'hey trever', 'hey forever']
 2020:Oct:10/22/20-23:00:07 -:- 
+2020:Oct:10/22/20-23:01:17 -:- ['countdown', 'stop now', 'stop down', "don't know", 'start now', 'star now', 'start', 'stop no', 'top', 'stop it']
+2020:Oct:10/22/20-23:01:20 -:- ['hair colour', 'hey cover', 'play cover', 'hey colour', 'hair color']
+2020:Oct:10/22/20-23:01:24 -:- ['play trevor', 'play forever', 'hays travel', 'play the trailer', 'hey brother']
+2020:Oct:10/22/20-23:01:30 -:- ['play cover', 'play trevor', 'play', 'play forever']
+2020:Oct:10/22/20-23:01:36 -:- ['private', 'liver', '5', 'timer']
+2020:Oct:10/22/20-23:01:39 -:- ["it's not listening", "it's not listening on", "no it's not listening", "he's not listening", "oh it's not listening"]
+2020:Oct:10/22/20-23:01:45 -:- 

@@ -6,6 +6,16 @@ import random
 engine = pyttsx3.init()
 engine.setProperty('rate', 120)
 engine.setProperty('voice', engine.getProperty('voices')[2].id)
+previousRequests = ""
+
+def latestMessages():
+    global previousRequests
+    temp = open(r"Requests.txt", "r").read().replace(previousRequests, "")
+    if not temp =="":
+        previousRequests = temp
+
+        return list(temp.replace("\n", "").replace("\"", "").replace("\'", "").split(" -:- ")[1].replace("[", "").replace("]", "").split(","))
+    return None, None
 
 
 def requests(text):
