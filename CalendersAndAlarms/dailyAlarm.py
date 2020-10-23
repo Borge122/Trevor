@@ -1,16 +1,18 @@
 import datetime
 from subroutines import *
+daysofweek = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
 
 
-def obtain(user):
+def obtain_today_events(user):
     todays_date = datetime.datetime.now()
     # #Get Lectures
     calendar = get_calender(user, "Lectures")
     # #Get Tutorials
     calendar += get_calender(user, "Tutorials")
     for event in calendar:
-        if "Start" in event.keys():
-            if todays_date.weekday() == event["Start"].weekday():
+        if "Rule" in event.keys():
+            if daysofweek[todays_date.weekday()] in event["Rule"].split(";BYDAY=")[1]:
                 print(event)
-obtain("George")
+
+obtain_today_events("George")
 
