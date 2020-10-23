@@ -36,3 +36,4 @@
 2020:Oct:10/23/20-12:30:16 -:- ['initiate epilepsy mode', 'initiate epilepsy road', 'initiate epilepsy load', 'initiate epilepsy ro', 'initiate epilepsy loud']
 2020:Oct:10/23/20-12:31:53 -:- ['nec party mode', 'party mode', 'any shape party mode', 'any seat party mode', 'mini seat party mode']
 2020:Oct:10/23/20-12:42:08 -:- ['party mode', 'play party mode', 'great party mode', 'the party mode']
+2020:Oct:10/23/20-16:07:41 -:- ['when you speak to go to green trevor repeat hello how are you', 'when you go to green trevor repeat hello how are you', 'when you speak to go to green clever repeat hello how are you', 'go to green trevor repeat hello how are you', 'then when you speak to go to green trevor repeat hello how are you']

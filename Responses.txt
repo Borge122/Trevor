@@ -55,3 +55,5 @@
 2020:Oct:23-12:41:53 -:- Ready to help squire
 2020:Oct:23-12:42:04 -:- Yes sir?
 2020:Oct:23-12:42:11 -:- Initiating party mode squire.
+2020:Oct:23-16:07:35 -:- Ready to help squire
+2020:Oct:23-16:07:44 -:- repeat hello how are you
