@@ -33,3 +33,6 @@
 2020:Oct:10/23/20-00:23:45 -:- ['repeat maxim is a weirdo', 'repeat maxum is a weirdo', 'repeat maximum is a weirdo', 'repeat maksym is a weirdo', 'repeat maksim is a weirdo']
 2020:Oct:10/23/20-00:24:18 -:- ['repeat', 'repeat georgia', 'repeat george', 'repeat georgie', 'repeat george is away']
 2020:Oct:10/23/20-00:24:58 -:- ['repeat 12345', 'repeat 1 2 3 4 5', 'repeat one two three four five']
+2020:Oct:10/23/20-12:30:16 -:- ['initiate epilepsy mode', 'initiate epilepsy road', 'initiate epilepsy load', 'initiate epilepsy ro', 'initiate epilepsy loud']
+2020:Oct:10/23/20-12:31:53 -:- ['nec party mode', 'party mode', 'any shape party mode', 'any seat party mode', 'mini seat party mode']
+2020:Oct:10/23/20-12:42:08 -:- ['party mode', 'play party mode', 'great party mode', 'the party mode']

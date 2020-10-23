@@ -48,3 +48,10 @@
 2020:Oct:23-00:24:20 -:- t
 2020:Oct:23-00:24:53 -:- Yes sir?
 2020:Oct:23-00:25:03 -:- repeat 12345
+2020:Oct:23-12:30:12 -:- Yes sir?
+2020:Oct:23-12:30:20 -:- Initiating epilepsy mode squire.
+2020:Oct:23-12:31:49 -:- Anything I can help you with squire
+2020:Oct:23-12:31:57 -:- Initiating party mode squire.
+2020:Oct:23-12:41:53 -:- Ready to help squire
+2020:Oct:23-12:42:04 -:- Yes sir?
+2020:Oct:23-12:42:11 -:- Initiating party mode squire.
