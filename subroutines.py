@@ -87,7 +87,6 @@ def get_calender(folder, calender_name):
 
     with open(r"{0}\{1}.ics".format(folder, calender_name), "r") as file:
         events = file.read().split("STATUS:CONFIRMED")[1:]
-        print(events)
         for event in events:
             python_calender.append({})
             for information in event.split("\n"):
