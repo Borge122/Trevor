@@ -124,13 +124,13 @@
 
     \subsubsection{Maxim-ReLU Function}
 
-    The second of our criteria derived functions is the Maxim-ReLU function. This meets all of the strict criteria but does not meet the relaxed bound function criteria . This is characteristic of a ReLU function though, so is acceptable.
+    The second of our criteria derived functions is the Maxim-ReLU function. This meets all of the strict criteria but does not meet the relaxed bound function criteria . This is characteristic of a ReLU function though, so is acceptable. It applies a constant scaling given by $\alpha$ within a certain radius of the origin given by $\beta$. Consequently, we get a function similar to a typical ReLU function but it is applied radially.
     \begin{equation}
         \label{eqn:Maxim-ReLU Function}
         \bar{n}=\left(\max\left(\alpha\left(\bar{n}-\beta\right),\bar{n}-\beta\right)+\alpha\beta\right)\times\hat{n} 
     \end{equation}
-    Where ${0} < \alpha \leq {1}$ and ${0} < \beta$.
-  
+    Where ${0} < \alpha \leq {1}$ and ${0} < \beta$. This function does not reduce the manifold's dimensionality. It can again be broken down into a magnitude equation $\left(\max\left(\alpha\left(\bar{n}-\beta\right),\bar{n}-\beta\right)+\alpha\beta\right)$ which is only dependent on the inputs data points's distance from origin and a direction $\hat{n}$ dependent only on the initial direction of the data point. Thus, ensuring spherical symmety and projection, its output space is also centred on the origin. However, this function is not bounded, just like a standard ReLU, and is not smooth. Despite this, it does not suffer from gradients tending to zero as the input radius tends to infinity, therefore will not suffer badly from the vanishing gradients. This function should again provide improvements by replacing all cases of ReLU with Maxim-ReLU.
+    
      
 
 
