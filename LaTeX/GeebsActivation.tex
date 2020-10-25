@@ -1,0 +1,149 @@
+\documentclass[onecolumn]{article}
+
+\begin{document}
+
+\title{A Criteria Derived Activation Function}
+
+\author{
+   Bird, George\
+  \texttt{geebs@anndevs.com}
+  \and
+  Polivoda, Maxim E.\
+  \texttt{u7w2@anndevs.com}
+}
+\date{07 October 2020}
+
+
+\maketitle
+
+\begin{abstract}
+    Artificial Neural Networks process information by applying transformations to data stored in manifolds which are embedded in high dimensional space. However, these manifolds may not be distributed evenly through all of available space. In fact it appears that current activation functions encourage such an uneven distribution, thus we must develop a set of criteria which activation functions should meet to ensure optimal manifold distribution on generalised tasks. We have also proposed several functions which meet this criteria.
+\end{abstract}
+
+\section{Introduction}
+    \subsection{A Spatial Intuition for Neural Networks}
+        
+    Exactly why artificial neural networks process information in the way they do is poorly understood. However, a doctrine of imagining the network as a group of spatial transformations has had quite some success in demystifying the actions of artificial neural networks. This is encouraged by the extensive use of matrix and tensor mathematics, which are commonly understood as relating to spatial systems. This way of understanding networks spatially I will refer to as manifold theory. Manifold theory states that each datapoint, which is stored and processed by the network, is represented by a coordinate point within a hyper-dimensional space or multiple spaces. When introducing many data points, from a real-world dataset, complex shapes known as manifolds form embedded in the space. These shapes are outlined by the positions of many of the aforementioned points. These manifold shapes are then manipulated by a variety of spatial transformations to yield a more useful and interpretable manifold. The dimensionality of the spaces is simply the number of neurons in a layer, where the neurons themselves are a set of perpendicular basis vectors whilst the information they currently hold reflects a coordinate for the current datapoint. Conversely any point in the space can have its position represented by a vector where each component of the vector maps to a specific neuron's value. The spatial transformations are variable and change until they produce useful manifolds. This is the basic action of all neural networks, yet this analogy is most evident for fully connected networks. It can, however, be expanded to account for all networks such as Convolutions and Long-Short Term Memory networks (LSTMs).
+
+        
+    Although this doctrine is growing, it is still common for people to place too much emphasis on the behaviour of individual neurons rather than the collective behaviour of the network. I mention this as the basis for all activation functions to date seems to revolve around the behaviour of the individual neurons. I believe this has limited the effectiveness of many activation functions as group behaviour has been neglected in design choices. Therefore, we have compiled a set of criteria which activation functions should follow to ensure the neurons are treated as a collective.
+    
+    \subsection{Strict Function Criteria}
+    
+    Strict criteria are criteria which the functions must follow to be effectively optimised. We present arguments as to why each criterion is important using ideas taken from manifold theory.
+   
+    \subsubsection{Non-Linear}
+        
+    For a fully connected network with a linear activation function (or no activation function at all), the neural network consists of a series of linear transformations only. Thus the entire network's function could be summarised as a single fully connected layer, lacking the complex information processing which makes these networks particularly useful. Therefore, the first criteria is that the activation function must be non-linear. All widely used activation functions meet this criteria. It is effectively an essential condition if one wishes to build any basic network capable of recognising anything more than linear trends.
+    
+        
+    \subsubsection{Equal input/output manifold dimensionality}
+       
+    Another criterion states that the dimensionality of the manifold should not change from the input to the output of the function. Removing a dimension results in the needless loss of information, and adding a dimension causes overhead. Once again, many existing functions conform to this criteria, however, softmax does not. Softmax reduces the dimensionality of the manifold.
+    
+    Despite this, softmax has some features which make it desirable in specific use cases. This includes human-network interfaces such as the output layer of the network, as no further manifold transformations are taking place, so it is acceptable to lose some seemingly redundant data, and that the manifold needs to be distributed in a way that is comprehendible to humans, which is otherwise a sub-optimal arrangement. Also inside transformer networks it has a specific use case so our generalised activation function criteria does not apply. However, our next criterion rules out practically all commonly used activation functions. This is the necessity for a spherically symmetric space.
+    
+    \subsubsection{Spherically Symmetric}
+    
+    Any asymmetries result it uneven distribution of manifolds. This is simply due to certain regions of space being more preferable than others to store information. Thus, by introducing symmetries we attempt to make all space have even, and preferable, probabilities to store manifolds. The more available space which manifolds can occupy; the more information the network can encode. To make clear we are not saying that activation functions which result in a finite output space are bad, but their finite bounds needs to be an equal distance from the centre of the output space in all directions. Therefore, we need a spherically symmetric activation function; then there is no unfavourable direction.
+
+    By applying this condition the coordinate system used no longer influences the distribution of manifolds in space, thus it is not possible to figure out which direction the basis vectors (neurons) point just from observing the output space of the function. We can only determine the centre of the space. This makes the network behave as a more unified system rather than a collection of independent neurons. There is no longer anything special about individual neurons besides the way we notate the mathematical computations. No widely used activation functions I know of currently possess this property
+        
+    Despite being an infinite space, both ReLU and Leaky-RelU collapse and scale only certain directions respectively. Thus, introducing favoured encoding directions. Sigmoid and Tanh operate on each points vector components consequently creating a hyper-cubic space. Hence the distance from the centre to the edge of the space is dependent on direction. As you can see this is a problem effecting many activation functions. Our networks so far have been performing sub-optimally with an effective loss in how much information can be encoded by a set of neurons. Many of the activation functions are plagued by us applying their transformations on an individual neuron basis rather than us imagining the network as a collective. The unfavoured directions may also make learning more troublesome for the network.
+
+    \subsubsection{Projection}
+        
+    Finally there are many ways in which a spherical-symmetric space could be created for the purpose of an activation function. One could imagine taking a 2D input space and wrapping distant regions in to an infinitely thin spiral pattern - creating a whirlpool like spherically-symmetric finite output space. This function fulfils all our criteria so far, but would produce a very poorly performing network. The reason for this requires another look at manifold theory.
+
+    The neural network transforms the input manifold to express useful trends in the information. Since the network mostly uses linear transformations, except the activation function, to classify data then these trends should be expressed linearly to allow the following layers in the network to mostly easily interpret them. We must also make the assumption, that these important trend-lines are most often origin-centric or pass through the origin. Thus, for origin-centric vectors, if the values along the trend-line change sign they reflect that the opposite to the trend was identified in the data. We shall refer to these important trend-lines as "meaning vectors" as they are often interpretable to meaning humans. For example it is what Primary Component Analysis attempts to find. There could be a meaning vector for the amount of the colour red in the input data, where the negative sign may correspond to blue. Of course there are meaning-vectors between every permutations of all data points, however, only some are important to the network, and we shall assume that these ones are roughly origin-centric.
+
+    This origin-centricty is not a great assumption to make. However, non-linearities must be introduced to the function and due to the spherical symmetry then there is an enforced centre to the space. Thus, the non-linearity is isotropic around the centre to ensure symmetry. We hope this will cause the network to migrate its most important meaning-vectors to be origin centric. We mention this, as it is not possible using a non-linear function to keep meaning-vectors linear if they start anywhere in space. We can only keep vectors passing through a certain point linear and so we choose this to be the centre of the space.
+
+    We can reason that the following layers of the network will recognise these trend-lines and attempt to interpret them further: interpolating and extrapolating its findings. However if the space curves, then so does the meaning vector, thus any attempt at extrapolation fails as the network will assume it remains linear trend as it has observed near the origin. If the network accounts for the curving, it has dedicated more neurons to interpret the more complex representation this will also still extrapolate poorly as the network is using linear algebra to approximate this curve. This is needless, requiring more time for the network to learn and reduces the effective networks processing power on the input data. These problems can be avoided by ensuring that vectors through the origin remain linear. 
+        
+    Thus, any points on a line drawn through the origin should remain on that line before and after the transformation or more generally any points on a line drawn through the centre of the input space should all remain on another line drawn through the centre of the output space. It does not matter if all the input lines are rotated evenly about the centre during the activation function, however I see no purpose in doing so. In summary, the direction must not be dependent on the distance of a point from the centre of the space. It is also important to mention that the weights in fully connected networks are performing a transformation around the origin, this indicates that a fully connected network already is origin centric.
+
+    Overall by ensuring that all points on the centred line remain on another centred line after the transformation, then the 'meaning-vectors' passing through the origin should remain linear. Linear meaning-vectors means that the network can more easily extrapolate trends and that these trends are more interpretable as the network does not need to performing extra processing to account for curved trend-lines. The network can then reason that along the trendline a property in the data gets stronger. In effect we are saying that the output space is a spherical projection of the input space.
+
+    %It can be assumed that the network shapes manifolds in certain ways to express useful trendlines within the data. It is also natural for the network to produce these trends as roughly straight lines. We shall call these trend lines 'meaning vectors'. As they could mean something qualatitive in the real world, let us say our original data was an image. It is passed through several layers of the neural network until a trendline is expressed. Points which are further along such a line could correspond to more of the colour red in the original image. Thus, these vectors have a 'meaning'.
+        
+    %However, our proposed whirlpool functions is producing a rotational skew to the manifold, thus these straight lines are curving.
+    %This can be roughly observed with principle component analysis which finds perpendicular meaning vectors. Though we don't constrain meaning vectors to only being perpendicular to each other. It is important to note that, for now, these don't have a significant real-world meaning to the network, they are just statistically significant and useful to its function. It does not assign conscious qualia to them as we do, such as something being more "red".
+
+    \subsubsection{Continuous}
+    
+    A continuous functions is our final strict criteria. However, the function does not need to be smooth. With a discontinuous function, potential gaps are introduced in to the manifold. There is no reason to do this and it just creates irregularities in the distribution of points in the manifold making it more difficult for the network to interpret.
+    
+    Functions such as the step function violate many of our criteria, but particularly this discontinuity causes the manifold to lose large amounts of information as several regions of the manifold are collapsed to singular points. This should be avoided as is effectively reducing the dimensionality of the manifold.
+
+    %-Discontinuity going to a point reduces the dimensionality of the manifold.
+
+    \subsection{Relaxed Function Criteria}
+        
+    Relaxed criteria are criteria which are not as essential, and functions which do not meet these criteria may still work effectively in many situations. However, we feel that they should be avoided if possible.
+        
+    \subsubsection{Bounded Functions}
+        
+    Bounded functions is referring to the output space of an activation function being finite. Thus as the radii of the input space goes to infinity the output reaches some finite limiting radii from the centre. This is a relaxed criteria as we have seen much success using functions such as ReLU and leaky-ReLU in many applications. I feel these are very useful for specific use cases, but their infinite output space is not favourable in general purpose activation functions.
+    
+    This is because outputs can reach huge values which may impede the function of later neurons as they become overloaded by such large values. This can be corrected for using a batch normalisation technique, however, it is not always possible to use batch normalisations. Hence we introduce "bounded function" as a relaxed criterion.
+       
+    \subsubsection{Origin as the Centre of the Space}
+        
+    Our final relaxed criteria is most applicable to fully connected layers, due to the nature of linear algebra multiplications. Fully connected layers first multiply their inputs with a weight matrix before adding a bias vector. This corresponds to a transformation about the origin followed by a translation. It is important to note that all linear algebra transformation perform their transformation around the origin. Therefore, it would be sensible to give the network the oppurtunity to distribute the manifold around the origin, hence creating this final criteria.
+    
+    There are many circumstances where this would not be ideal, such as an elementwise multiplication of two vectors intended to cause a "blocking-operation" such as those seen in Long-Short Term Memory Networks. Despite this, in general activation functions should have an output space centred around the origin if the output is to be further processed by fully connected layers.
+    
+    As linear algebra multiplications transforms about the origin.
+       
+    \section{Criteria Fulfilling Functions}
+       
+    We first introduce the "Geebs' Tanh Function" which meets all of the strict and relaxed criteria (Eqn. 1).
+
+    \begin{equation}
+        \label{eqn:Geebs' Tanh Function}
+        \bar{n}'=\left(\tanh|\bar{n}|\right)\times\hat{n}\
+    \end{equation}
+
+    Where $\bar{n}$ is a cartesian vector of the input point. It is non-linear as shown by its derivative being unequal to one.
+
+    \[\frac{\partial \bar{n_{i}}'}{\partial \bar{n_{j}}}=\left\{
+    \begin{array}{ll}
+        \frac{\left(sech^{2}|\bar{n}|\right)|\bar{n}|\bar{n_{i}}^{2}+|\bar{n}|^{2}\tanh\left( |\bar{n}|\right)-\bar{n_{i}}^{2}\tanh\left( |\bar{n}|\right)}{ |\bar{n}|^{3}} & ,i = j \\
+        \\
+        \frac{\left(sech^{2}|\bar{n}|\right)|\bar{n}|-\tanh\left(|\bar{n}|\right)}{ |\bar{n}|^{3}}\bar{n_{i}}\bar{n_{j}} & ,i \neq j \\
+    \end{array} 
+    \right. \]
+
+    This equation does not reduce the dimensionality of the manifold. This activation function can be considered in two halves, the magnitude and direction. The magnitude is $\tanh|\bar{n}|$ and since this is dependent only on the magnitude of $\bar{n}$ then it is a spherically symmetric function. The direction is given by $\hat{n}$ such that it is a unit vector about the origin, therefore it is a spherically symmetric. The direction is a projection, such that any point represented by a vector from the origin gets projected to become a unit vector from the origin. Therefore, any point on a line through the origin remains on that line after the transformation. This function is also continuous, centred around the origin and bounded with a maximum radius of one from the origin. It also happens to be a smooth function.
+
+
+
+
+        %-These are general purpose activation functions. Specific purpose ones are still useful like sigmoid as a blocking gate
+        %-The function must be non-linear done
+        %-The output manifold should have the potential for the same dimensionality as the space. done
+        %-This space should be with a spherical symmetry for even distribution of manifolds. done
+        %-Points on a line through the center of the space should remain on that line.
+        %-Continuous
+        %Relaxed conditions:
+        %-The space is bounded i.e. finite. This is due to the spherical space and non-linear. It is impossible to have an infinite space whilst also keeping lines parallel through the origin. Only function is no activation functions which is linear!!!
+        %-Continuous otherwise you lose information
+        %-Preferably smooth
+        %-Address neuron saturation. (Gradient going to zero)
+        %Speed of learning, time to initiate learning, learning saturation
+
+        %-doesnt need to be origin-centric.
+        %Before activation functions are performed the information can theoretically be distributed over infinite space. The activation function takes th
+        %non-linear activation function
+
+
+        %neural networks operate by storing information in a series of manifolds 
+
+        %information passing through the network is held in a series of embedded manifolds and can be processed by spatial transformations. 
+        %The set of basis vectors for each space are the neurons in a specific layer of the network.
+        %Your introduction goes here! Some examples of commonly used commands and features are listed below, to help you get started.
+
+
+
+\end{document}

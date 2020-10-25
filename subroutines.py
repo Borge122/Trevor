@@ -44,6 +44,13 @@ def say(text):
     return None
 
 
+def percentblend(a, b, percent):
+    new = []
+    for i in range(3):
+        new.append(int(a[i]*(1-percent) +b[i]*percent))
+    return new
+
+
 def multi_say(list_of_text):
     return say(list_of_text[random.randint(0, len(list_of_text)-1)])
 
