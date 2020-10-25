@@ -99,7 +99,7 @@
        
     \section{Criteria Fulfilling Functions}
     \subsubsection{Geebs' Tanh Function}
-    We first introduce the "Geebs' Tanh Function" which meets all of the strict and relaxed criteria (Eqn. 1).
+    We first introduce the "Geebs' Tanh Function" which meets all of the strict and relaxed criteria (Eqn. 1). This is a modification of a standard tanh formula where instead of it being applied elementwise it is instead applied to the pythagorian distance of an input data point to the origin.
 
     \begin{equation}
         \label{eqn:Geebs' Tanh Function}
@@ -121,12 +121,17 @@
     Improvements should be observed by replacing almost all usages of Sigmoid and Tanh with the Geeb's Tanh Function. One exception being when using Sigmoid as a blocking gate such as in a LSTM, in this example a function is needed which has an output space ranging from zero (blocked) to one (pass) for each component in the vector. We offer an adapted Geebs Tanh functions which meets these criteria.
     
     Unfortunately, the Geeb's Tanh Function does have a gradient which goes to zero, this will cause issues with vanishing gradients just as Sigmoid and Tanh do.
-    
+
     \subsubsection{Maxim-ReLU Function}
 
-    The second of our criteria derived functions is the Maxim-ReLU function. This meets all of the strict criteria but does not meet the bound function criteria out of the relaxed criteria. This is characteristic of a ReLU function though so is acceptable.
-
-
+    The second of our criteria derived functions is the Maxim-ReLU function. This meets all of the strict criteria but does not meet the relaxed bound function criteria . This is characteristic of a ReLU function though, so is acceptable.
+    \begin{equation}
+        \label{eqn:Maxim-ReLU Function}
+        \bar{n}=\left(\max\left(\alpha\left(\bar{n}-\beta\right),\bar{n}-\beta\right)+\alpha\beta\right)\times\hat{n} 
+    \end{equation}
+    Where ${0} < \alpha \leq {1}$ and ${0} < \beta$.
+  
+     
 
 
     %-These are general purpose activation functions. Specific purpose ones are still useful like sigmoid as a blocking gate
