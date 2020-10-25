@@ -117,22 +117,24 @@
     \right. \]
 
     This equation does not reduce the dimensionality of the manifold. This activation function can be considered in two halves, the magnitude and direction. The magnitude is $\tanh|\bar{n}|$ and since this is dependent only on the magnitude of $\bar{n}$ then it is a spherically symmetric function. The direction is given by $\hat{n}$ such that it is a unit vector about the origin, therefore it is a spherically symmetric. The direction is a projection, such that any point represented by a vector from the origin gets projected to become a unit vector from the origin. Therefore, any point on a line through the origin remains on that line after the transformation. This function is also continuous, centred around the origin and bounded with a maximum radius of one from the origin. It also happens to be a smooth function.
+    Geeb's Tanh Function should replace all usages of Tanh and Sigmoid in almost all situations. One exception being when using Sigmoid as a blocking gate such as in a LSTM, in this example a function is needed which has an output space ranging from zero (blocked) to one (pass) for each component in the vector.
+    Unfortunately, the Geeb's Tanh Function does have a gradient which goes to zero. This could cause issues with vanishing gradients
 
 
 
+    %-These are general purpose activation functions. Specific purpose ones are still useful like sigmoid as a blocking gate
+    %-The function must be non-linear done
+    %-The output manifold should have the potential for the same dimensionality as the space. done
+    %-This space should be with a spherical symmetry for even distribution of manifolds. done
+    %-Points on a line through the center of the space should remain on that line.
+    %-Continuous
+    %Relaxed conditions:
+    %-The space is bounded i.e. finite. This is due to the spherical space and non-linear. It is impossible to have an infinite space whilst also keeping lines parallel through the origin. Only function is no activation functions which is linear!!!
+    %-Continuous otherwise you lose information
+    %-Preferably smooth
 
-        %-These are general purpose activation functions. Specific purpose ones are still useful like sigmoid as a blocking gate
-        %-The function must be non-linear done
-        %-The output manifold should have the potential for the same dimensionality as the space. done
-        %-This space should be with a spherical symmetry for even distribution of manifolds. done
-        %-Points on a line through the center of the space should remain on that line.
-        %-Continuous
-        %Relaxed conditions:
-        %-The space is bounded i.e. finite. This is due to the spherical space and non-linear. It is impossible to have an infinite space whilst also keeping lines parallel through the origin. Only function is no activation functions which is linear!!!
-        %-Continuous otherwise you lose information
-        %-Preferably smooth
-        %-Address neuron saturation. (Gradient going to zero)
-        %Speed of learning, time to initiate learning, learning saturation
+    %-Address neuron saturation. (Gradient going to zero)
+    %Speed of learning, time to initiate learning, learning saturation
 
         %-doesnt need to be origin-centric.
         %Before activation functions are performed the information can theoretically be distributed over infinite space. The activation function takes th
