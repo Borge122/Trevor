@@ -6,10 +6,10 @@
 
 \author{
    Bird, George\
-  \texttt{geebs@anndevs.com}
+  \texttt{george.bird@student.manchester.ac.uk}
   \and
-  Polivoda, Maxim\
-  \texttt{u7w2@anndevs.com}
+  Polivoda, Maxim E.\
+  \texttt{mxp19tkp@bangor.ac.uk}
 }
 \date{07 October 2020}
 
@@ -121,7 +121,10 @@
     Improvements should be observed by replacing almost all usages of Sigmoid and Tanh with the Geeb's Tanh Function. One exception being when using Sigmoid as a blocking gate such as in a LSTM, in this example a function is needed which has an output space ranging from zero (blocked) to one (pass) for each component in the vector. We offer an adapted Geebs Tanh functions which meets these criteria.
     
     Unfortunately, the Geeb's Tanh Function does have a gradient which goes to zero, this will cause issues with vanishing gradients just as Sigmoid and Tanh do.
+    
+    \subsubsection{Maxim-ReLU Function}
 
+    The second of our criteria derived functions is the Maxim-ReLU function. This meets all of the strict criteria but does not meet the bound function criteria out of the relaxed criteria. This is characteristic of a ReLU function though so is acceptable.
 
 
 
