@@ -13,7 +13,6 @@
 }
 \date{07 October 2020}
 
-
 \maketitle
 
 \begin{abstract}
@@ -99,47 +98,87 @@
        
     \section{Criteria Fulfilling Functions}
     \subsubsection{Geebs' Tanh Function}
-    We first introduce the "Geebs' Tanh Function" which meets all of the strict and relaxed criteria (Eqn. 1). This is a modification of a standard tanh formula where instead of it being applied elementwise it is instead applied to the pythagorian distance of an input data point to the origin.
+    
+    We first introduce the "Geebs' Tanh Function" which meets all of the strict and relaxed criteria (Eqn. 1). This is a modification of a standard Tanh formula. Instead of applying a tanh function elementwise, it instead applies tanh to the pythagorian distance of a point from the origin. Improvements should be observed by replacing most general uses of standard Tanh and Sigmoid within neural networks. However, such specific uses such as sigmoid providing a blocking factor in a network, for example the 'forget network' in an LSTM which uses a sigmoid function before an elementwise multiplication, should not be replaced as the required function's bounds are different from the Geeb's Tanh function. We provide an alternate equation to accomidate for this specific, but common, example later.
 
     \begin{equation}
-        \label{eqn:Geebs' Tanh Function}
-        \bar{n}'=\left(\tanh|\bar{n}|\right)\times\hat{n}\
+        \label{eqn: Geebs' Tanh Function} 
+        F\left(\bar{n}\right)=\hat{n}\tanh|\bar{n}|
     \end{equation}
 
-    Where $\bar{n}$ is a cartesian vector of the input point. It is non-linear as shown by its derivative being unequal to one.
+    Where $\bar{n}$ is the cartesian coordinates represented in a vector for the input data point. Shown below is the derivative of each element in the output vector in respect to each element of the input vector. This shows the function fulfills the non-linear criteria.
 
-    \[\frac{\partial \bar{n_{i}}'}{\partial \bar{n_{j}}}=\left\{
+    \[\frac{\partial F\left(\bar{n}\right)_{i}}{\partial \bar{n_{j}}}=\left\{
     \begin{array}{ll}
-        \frac{\left(sech^{2}|\bar{n}|\right)|\bar{n}|\bar{n_{i}}^{2}+|\bar{n}|^{2}\tanh\left( |\bar{n}|\right)-\bar{n_{i}}^{2}\tanh\left( |\bar{n}|\right)}{ |\bar{n}|^{3}} & ,i = j \\
-        \\
-        \frac{\left(sech^{2}|\bar{n}|\right)|\bar{n}|-\tanh\left(|\bar{n}|\right)}{ |\bar{n}|^{3}}\bar{n_{i}}\bar{n_{j}} & ,i \neq j \\
+        \frac{\left(|\bar{n}|^{2}-|\bar{n}_{i}|^{2}\right)\tanh|\bar{n}|}{|\bar{n}|^{3}} + \frac{\bar{n}_{i}^{2}sech^{2}|\bar{n}|}{|\bar{n}|^{3}} & i = j \\\\
+        \frac{|\bar{n}|sech^{2}|\bar{n}|-\tanh|\bar{n}|}{|\bar{n}|^{3}}\bar{n}_{i}\bar{n}_{j} & i \neq j
     \end{array} 
     \right. \]
 
-    This equation does not reduce the dimensionality of the manifold. This activation function can be considered in two halves, the magnitude and direction. The magnitude is $\tanh|\bar{n}|$ and since this is dependent only on the magnitude of $\bar{n}$ then it is a spherically symmetric function. The direction is given by $\hat{n}$ such that it is a unit vector about the origin, therefore it is a spherically symmetric. The direction is a projection, such that any point represented by a vector from the origin gets projected to become a unit vector from the origin. Therefore, any point on a line through the origin remains on that line after the transformation. This function is also continuous, centred around the origin and bounded with a maximum radius of one from the origin. It also happens to be a smooth function.
-      
-    Improvements should be observed by replacing almost all usages of Sigmoid and Tanh with the Geeb's Tanh Function. One exception being when using Sigmoid as a blocking gate such as in a LSTM, in this example a function is needed which has an output space ranging from zero (blocked) to one (pass) for each component in the vector. We offer an adapted Geebs Tanh functions which meets these criteria.
+    This function does not reduce the dimensionality of the space, shown by $\bar{n}'$ having the same number of elements as $\bar{n}$, and it does not reduce the dimensionality of the manifold which can be shown experimentally. All of our functions are constructed by two seperable equations, reflecting a hyper-spherical coordinate system used. There is the magnitude equation which is only dependent on the pythagorian distance of a point from the origin, consequently producing a spherically symmetric output space. The magnitude equation is given by $\tanh|\bar{n}|$. The other equation describes the direction points are distributed in and this is done by projecting the space radially onto a hyper-spherical shell with magnitude one from the origin, thus ensuring the projection criteria. This direction equation simply converts any given vector representing a point from the origin to its corresponding unit vector. The direction equation is $\hat{n}$. Therefore, any point on a line through the origin remains on that line after the transformation. This function is also continuous, centred around the origin and bounded with a maximum radius of one from the origin. Geeb's Tanh function also happens to be smooth.
     
-    Unfortunately, the Geeb's Tanh Function does have a gradient which goes to zero, this will cause issues with vanishing gradients just as Sigmoid and Tanh do.
+    This function suffers from the same problem which Tanh and Sigmoid do. Its gradients tends to zero in the limit where the input point goes to an infinite distance from the origin. This incurs the vanishing gradients problem.
 
     \subsubsection{Maxim-ReLU Function}
-
-    The second of our criteria derived functions is the Maxim-ReLU function. This meets all of the strict criteria but does not meet the relaxed bound function criteria . This is characteristic of a ReLU function though, so is acceptable. It applies a constant scaling given by $\alpha$ within a certain radius of the origin given by $\beta$. Consequently, we get a function similar to a typical ReLU function but it is applied radially.
+    The second function we present is an analogue of the popular Leaky-ReLU function. Our Maxim-ReLU function meets all the strict criteria and all except one of the relaxed criteria. It fails to meet the relaxed bound function criteria. This is characteristic of a Leaky-ReLU function though, so it is acceptable in many applications. It applies a constant scaling given by $\alpha$ within a certain radius of the origin given by $\beta$. Consequently, we get a function similar to a typical Leaky-ReLU function but its is scaling applied within a certain range of the origin radially instead of the when the sign of a cartesian coordinate component is negative. Improvements should be made by replacing all uses of ReLU with Maxim-ReLU.
     
     \begin{equation}
-        \label{eqn:Maxim-ReLU Function}
-        \bar{n}=\left(\max\left(\alpha\left(\bar{n}-\beta\right),\bar{n}-\beta\right)+\alpha\beta\right)\times\hat{n} 
+        \label{eqn: Maxim-ReLU Function}
+        F\left(\bar{n}\right)=\left(\max\left(\alpha\left(\bar{n}-\beta\right),\bar{n}-\beta\right)+\alpha\beta\right)\times\hat{n} 
     \end{equation}
-    
-    Where ${0} < \alpha \leq {1}$ and ${0} < \beta$. This function does not reduce the manifold's dimensionality. It can again be broken down into a magnitude equation $\left(\max\left(\alpha\left(\bar{n}-\beta\right),\bar{n}-\beta\right)+\alpha\beta\right)$ which is only dependent on the inputs data points's distance from origin and a direction $\hat{n}$ dependent only on the initial direction of the data point. Thus, ensuring spherical symmety and projection, its output space is also centred on the origin. However, this function is not bounded, just like a standard ReLU, and is not smooth. Despite this, it does not suffer from gradients tending to zero as the input radius tends to infinity, therefore will not suffer badly from the vanishing gradients. This function should again provide improvements by replacing all cases of ReLU with Maxim-ReLU.
+
+    Where ${0} < \alpha \leq {1}$ and ${0} < \beta$ and $\bar{n}$ is the cartesian coordinates represented in a vector for the input data point. Shown below is the derivative of each element in the output vector in respect to each element of the input vector. This shows the function fulfills the non-linear criteria.
+
+    \[\frac{\partial F\left(\bar{n}\right)_{i}}{\partial \bar{n_{j}}}=\left\{
+    \begin{array}{ll}
+        \alpha & i = j \cap |\bar{n}|<\beta \\\\
+        0 & i \neq j \cap |\bar{n}|<\beta \\\\
+        \frac{-\left(\alpha-1\right)\bar{n}_{i}\bar{n}_{j}}{|\bar{n}|^{3}} & i = j \cap \beta<|\bar{n}|  \\\\
+        \frac{\left(\alpha-1\right)\beta\left(|\bar{n}|-\bar{n}_{i}\right)}{|\bar{n}|^{3}} & i \neq j \cap \beta<|\bar{n}| \\
+
+    \end{array} 
+    \right. \]
+
+   This function does not reduce the manifold's dimensionality. It can again be broken down into a magnitude equation $\left(\max\left(\alpha\left(\bar{n}-\beta\right),\bar{n}-\beta\right)+\alpha\beta\right)$ which is only dependent on the input data points's distance from origin and a direction $\hat{n}$ dependent only on the initial direction of the data point. Just as before the direction equation is simply projecting all vectors on to a unit hyper-sphere. Due to these properties our function meets both the spherical symmety and projection criteria. Its output space is also centred on the origin. However, this function is not bounded, just like a standard Leaky-ReLU, and is not smooth. Despite this, it does not suffer from gradients tending to zero as the input radius tends to infinity, therefore will not suffer badly from the vanishing gradients. This function should again provide improvements by replacing all cases of ReLU with Maxim-ReLU.
     
     \subsubsection{Hyper-Cubic Projection}
     
-    We have now replaced two of the most commonly used activation functions, which covers most of the general uses of activation functions. However, as previously mentioned, there are some unique use cases in which our functions are not applicable. One of these use cases is a blocking gate in an LSTM, this requires a hyper-cubic output space not a hyper-spherical output space. Of course this is incompatible with the spherical symmetry criteria, but since this is a unique use case and is widely used we have proposed a projection equation to map a input space to a hyper-cubic space.
+    We have now replaced two of the most commonly used activation functions, which covers most of the general uses of activation functions. However, as previously mentioned, there are some unique use cases in which our functions are not applicable. One of these use cases is a blocking gate in an LSTM, this requires a hyper-cubic output space not a hyper-spherical output space. This hyper-cubic output space must also be bounded between zero (blocked) and one (passed) for each component in a neuron-basis coordinate system. Of course this is incompatible with the spherical symmetry criteria, but since this is a unique use case and is widely used we have proposed a projection equation to map a input space to a hyper-cubic space.
 
+    This equation projects the input space into a hyper-cubic space bounded between -1 and 1 for all neuron-basis components. A typical minimum function cannot be used here, as it collapses the space in a cubic fashion rather than a spherical fashion. In effect this function preserves the space between $-1<\bar{n}<1$ whilst collapsing all space outside this region into a hyper-cubic shell. This can be performed using a typical minimum function, however this does not satisfy the projection criteria, as a straight line through the origin gets collapsed onto a line on the shell rather than a single point. Thus, to preserve the linearity of meaning-vectors we have designed equation 3 to project points onto the shell radially instead of cubicly.
 
-     
+    \begin{equation}
+        \label{eqn: Hyper-Cubic Projection Equation}
+        F\left(\bar{n}\right)=\min\left(\frac{1}{\max\left(\left|\bar{n}_{1}\right|,\left|\bar{n}_{2}\right|,...,\left|\bar{n}_{i}\right|\right)},1\right)\times\bar{n}
+    \end{equation}
 
+    As mentioned this functions bounds are $-1<\bar{n}<1$ whereas we need a function to replace the sigmoid used in blocking gates requiring bounds of $0<\bar{n}<1$. This can be achieved using equation 4.
+    
+    \begin{equation}
+        \label{eqn: Hyper-Cubic Projection Equation 2}
+        F\left(\bar{n}\right)=\min\left(\frac{1}{2\max\left(\left|\bar{n}_{1}\right|,\left|\bar{n}_{2}\right|,...,\left|\bar{n}_{i}\right|\right)},0.5\right)\times\bar{n} + 0.5\bar{j}
+    \end{equation}
+
+    Where $\bar{j}$ is a vector of ones with the same number of components as $\bar{n}$. This is our hyper-cubic projection equation which meets the projection criteria unlike a typical minimum function. However, this function does not meet spherical symmetry criteria. Equation 3 meets the 'origin at the centre of the output space' criteria but equation 4 does not. To finally create a function analogous to the sigmoid activation for the purpose of a blocking gate, which meets more of the criteria we arrive at equation 5.
+    
+    \begin{equation}
+        \label{eqn: Geeb's-Sigmoid}
+        F(\hat{n}) = C(T(\hat{n}))
+    \end{equation}
+    Where $C(\bar{n})$ is equal $F(\bar{n})$ in equation 5 and $T(\bar{n})$ is equal to a modified Geeb's Tanh Function shown in equation 6. In short $T(\bar{n})$ is equal to $\sqrt{2}$ times equation 1.
+    \begin{equation}
+        \label{eqn: Geeb's-Sigmoid}
+        T(x) = \sqrt{2}\hat{n}\tanh|\bar{n}|
+    \end{equation}
+    Therefore, we have constructed an analogous function to sigmoid, meeting more criteria than the typical sigmoid. However, this final function still breaks several of criteria. Despite this, the criteria are guidance for how to construct generalised activation functions, yet this function is specific purposed and its purpose directly contradicts the criteria it has broken. Therefore, it is acceptable as it is optimised to the greatest it can be according to the criteria. Specific purpose activation functions are always preferable but it is not always feasable to design them. 
+
+    We have now offered alternatives to the most common activation functions used in fully connected networks, convolutional networks and recurrent neural networks. This final equation means that all activation functions within an standard LSTM now have analogous functions which fulfill our criteria.
+    \section{Discussion}
+    It is evident that many of these functions are substantially more complex than the common activation functions. However, our hope is that testing will show the benefit from using our modified functions outweighs the increased computational processing cost for our new slightly more complex functions. Rudimentary testing by ourselves has indicated that this is true.
+
+    We do not believe this list of criteria to be complete, further advancements in understanding the spatial nature of networks will hopefully reveal some further optimisations to activation functions.
+
+    Finally, there are three aspects we would like to benchmark our improved functions on in regards to the network's learning capability. The first is the rate of learning whilst using our modified functions compared to common activation functions. Secondly we would like to investigate whether the learning 'saturates' at a better level than a typical activation function. This could be done using accuracy on a classification task. Thirdly, we would expect the time for the network to show initial, measurable improvement on a task to reduce. For example a network will by chance get roughly 10\% on the MNIST dataset. The time taken for a statistically significant increase in success above this random chance should be shorter with our new functions.
 
     %-These are general purpose activation functions. Specific purpose ones are still useful like sigmoid as a blocking gate
     %-The function must be non-linear done
