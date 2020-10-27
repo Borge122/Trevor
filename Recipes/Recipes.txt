@@ -1,0 +1,41 @@
+{
+	"Cabbage Pasta":
+	{
+		Ingediants:
+		{
+			"Savoy Cabbage": [1, "item"],
+			"Bacon": [1, "pack"],
+			"Garlic Bread": [1, "pack"],
+			"Garlic": [1, "clove"],
+			"Thyme": [1, "pinch"],
+			"Parmassan": [0.2, "stick"],
+			"Pine Nuts": [0.25, "packet"],
+			"Pasta": [500, "grams"]
+			"Mozzerella": [2, "pearls"],
+			"Fresh Cream": [350, "grams"],
+		},
+		Method: 
+		[
+			"Add garlic clove, thyme and bacon into the pan. Put garlic bread on",
+			"Cut the cabbage into strips and place in pan, put the pasta on to boil. Toast some pinenuts",
+			"Once the cabbage has wilted add the parmassan, mozzerella, and fresh cream",
+			"Mix the pasta in. Done!"
+		]
+	},
+	"Cornish Pasty":
+	{
+		Ingredients:
+		{
+			"Corned Beef": [400, "grams"],
+			"White Onion": [1, "item"],
+			"Potatoes": [500, "grams"]
+			"Tomato Puree": [1, "squirt"]
+		}
+		Method:
+		[
+			"Peel and chop potatoes and onion, boil for 20 minutes then mash",
+			"Then add corned beef and mix, with tomato puree, salt, pepper and mustard",
+			"Roll pasty, line tin, add mixture, add lid, cook for 30 minutes"
+		]
+	}
+}
